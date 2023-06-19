@@ -1,0 +1,31 @@
+`timescale 1ns/1ps	 
+module Traffic_signal_test;	
+// making a branch teat to insert values initial the run time.
+// we put wire for the outputs and reg for the input when the program be under the test:	
+	wire [2:0] North_signal,South_signal,East_signal,West_signal; 
+	
+	reg	 clock,reset;
+
+//the clock will be 1 in the set initial, and change its value every 4 time:
+	initial 
+		begin 
+			clock= 1'b0;
+			forever #4 clock=~clock;
+		end	  
+		
+//the reset will be 1 in the set initial, and will be zero after 3 time:
+// the program will stop after 400.
+		initial 
+			begin 
+				reset =1'b1;
+				#4
+				reset=1'b0;
+				#400
+				$stop;
+			end	
+
+// call the original - main- module:
+Traffic_signal at (North_signal,South_signal,East_signal,West_signal,clock,reset);
+endmodule
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
